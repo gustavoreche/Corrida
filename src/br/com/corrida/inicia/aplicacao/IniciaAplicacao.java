@@ -1,44 +1,36 @@
 package br.com.corrida.inicia.aplicacao;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import br.com.corrida.service.exibe.dados.corrida.ExibeDadosDaCorrida;
+import br.com.corrida.service.extrai.log.ExtraiInformacaoDoLog;
 
 public class IniciaAplicacao {
 	
-	private static final String NOME_ARQUIVO_LEITURA = "corrida.log";
+	private static final String SAIR = "sair";
+	
+	private static final int SIM = 1;
+	private static final int NAO = 0;
 	
 	public void executa() {
-		List<Object> lista = new ArrayList<>();
-		Scanner entrada = null;
-//		String regex = "([^\\t]+[\\w*]+)"; 
-		String regex = "([^\\t]+)";
-		try {
-			entrada = new Scanner(new FileReader(NOME_ARQUIVO_LEITURA));
-		} catch (FileNotFoundException e) {
-			System.err.println("IniciaAplicacao - executa - Exception: " + e);
+		ExtraiInformacaoDoLog extraiInformacao = new ExtraiInformacaoDoLog();
+		String nomeArquivoDeLog = "";
+		int sairDoSistema = 0;
+		do {
+			@SuppressWarnings("resource")
+			Scanner entradaUsuario = new Scanner(System.in);
+			System.out.println("");
+			System.out.print("DIGITE O NOME DO ARQUIVO DE LOG. EX: teste.log OU DIGITE SAIR: ");
+			nomeArquivoDeLog = entradaUsuario.nextLine();
+			sairDoSistema = nomeArquivoDeLog.equalsIgnoreCase(SAIR) ? SIM : NAO;
+		} while(sairDoSistema == NAO && !extraiInformacao.leArquivoDigitado(nomeArquivoDeLog));
+		
+		if(sairDoSistema == SIM) {
+			System.err.print("VOCÊ OPTOU POR SAIR DO SISTEMA. MUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
+			return;
 		}
-		int contadorDeLinha = 1;
-		while (entrada.hasNextLine()) {
-			String linha = entrada.nextLine();
-			if(contadorDeLinha != 1) {
-				Pattern p = Pattern.compile(regex);
-				Matcher matcher = p.matcher(linha);
-				while(matcher.find()) {
-					System.out.println(matcher.group(1));	
-					lista.add(matcher.group(1));
-				}
-				System.out.println(lista);
-			} else {
-				System.out.println("IniciaAplicacao - executa - Ignora a leitura da primeira linha, "
-						+ "pois são os titulos dos campos.");
-			}
-			contadorDeLinha++;
-		}		
+		
+		new ExibeDadosDaCorrida().executa(extraiInformacao.executa(nomeArquivoDeLog));
 	}
 
 }
