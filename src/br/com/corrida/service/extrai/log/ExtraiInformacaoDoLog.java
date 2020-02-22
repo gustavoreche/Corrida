@@ -16,26 +16,29 @@ import br.com.corrida.domain.dados.piloto.DadosPiloto;
 public class ExtraiInformacaoDoLog {
 	
 	private Scanner arquivoLido = null;
+	
+	private static final String REGEX_PARA_SEPARAR_POR_TAB = "([^\\t]+)";
+	private static final int PULA_LEITURA_DA_LINHA_1 = 1; 
 
 	public List<DadosPiloto> executa(String nomeArquivoDeLog) {
 		List<DadosPiloto> listaDeDadosDoLog = new ArrayList<>();
-		Scanner entrada = this.arquivoLido;
-		String regex = "([^\\t]+)";
-		int contadorDeLinha = 1;
+		Scanner log = this.arquivoLido;
+		String regex = REGEX_PARA_SEPARAR_POR_TAB;
+		int contadorDeLinhaDoLog = 1;
 		int contadorDeDadosEncontradosNoLog;
-		while (entrada.hasNextLine()) {
+		while (log.hasNextLine()) {
 			contadorDeDadosEncontradosNoLog = 1;
-			String linha = entrada.nextLine();
-			if(contadorDeLinha != 1) {
+			String linhaDoLog = log.nextLine();
+			if(contadorDeLinhaDoLog != PULA_LEITURA_DA_LINHA_1) {
 				DadosPiloto dadosDoLog = new DadosPiloto();
-				Pattern p = Pattern.compile(regex);
-				Matcher matcher = p.matcher(linha);
-				while(matcher.find()) {
+				Pattern modeloParaSepararCaractere = Pattern.compile(regex);
+				Matcher caractereSeparado = modeloParaSepararCaractere.matcher(linhaDoLog);
+				while(caractereSeparado.find()) {
 					try {
-						EnumTipoDadoLogCorrida pegaDado = EnumTipoDadoLogCorrida.pegaDado(contadorDeDadosEncontradosNoLog);
-						Class<? extends InterfaceDefineDadosDoLog> classeQueDefineDados = pegaDado.getDefineDadosDoLog();
-						Constructor<? extends InterfaceDefineDadosDoLog> construtor = classeQueDefineDados.getConstructor();
-						construtor.newInstance().executa(matcher.group(1), dadosDoLog);
+						EnumTipoDadoLogCorrida pegaInformacaoDoLog = EnumTipoDadoLogCorrida.pegaDado(contadorDeDadosEncontradosNoLog);
+						Class<? extends InterfaceDefineDadosDoLog> classeQueDefineDados = pegaInformacaoDoLog.getDefineDadosDoLog();
+						Constructor<? extends InterfaceDefineDadosDoLog> construtorDaClasseQueDefineDados = classeQueDefineDados.getConstructor();
+						construtorDaClasseQueDefineDados.newInstance().executa(caractereSeparado.group(1), dadosDoLog);
 					} catch (Throwable e) {
 						System.err.println("ERRO NO TRATAMENTO DOS DADOS DO LOG.");
 					}
@@ -46,13 +49,13 @@ public class ExtraiInformacaoDoLog {
 				System.out.println("IniciaAplicacao - executa - Ignora a leitura da primeira linha, "
 						+ "pois são os titulos dos campos.");
 			}
-			contadorDeLinha++;
+			contadorDeLinhaDoLog++;
 		}		
 		return listaDeDadosDoLog;
 	}
 	
 	public boolean leArquivoDigitado(String nomeArquivoDeLog) {
-		Scanner entrada = null;
+		Scanner leituraDoArquivoDeLog = null;
 		String diretorioQueDeveSerGravado = "";
 		try {
 			diretorioQueDeveSerGravado = new File(".").getCanonicalPath();
@@ -60,8 +63,8 @@ public class ExtraiInformacaoDoLog {
 			System.err.println("Erro para localizar diretorio atual.");
 		}
 		try {
-			entrada = new Scanner(new FileReader(nomeArquivoDeLog));
-			this.arquivoLido  = entrada;
+			leituraDoArquivoDeLog = new Scanner(new FileReader(nomeArquivoDeLog));
+			this.arquivoLido  = leituraDoArquivoDeLog;
 		} catch (FileNotFoundException e) {
 			System.err.println("Não encontrou arquivo de log. Nome do arquivo digitado: " 
 		+ nomeArquivoDeLog + "\nO arquivo de log deve estar no seguinte diretorio: " + diretorioQueDeveSerGravado);

@@ -36,7 +36,6 @@ public class ExibeDadosDaCorrida {
 			 listaExibeDados.add(exibeDados);
 		}
 		List<PosicaoPiloto> listaPosicaoPiloto = new ArrayList<>();
-		System.out.println(listaExibeDados);
 		
 		do {
 			ExibeDados exibe = new ExibeDados();
