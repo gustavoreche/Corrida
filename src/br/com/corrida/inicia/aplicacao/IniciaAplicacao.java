@@ -31,6 +31,7 @@ public class IniciaAplicacao {
 		}
 		
 		new ExibeDadosDaCorrida().executa(extraiInformacao.executa(nomeArquivoDeLog));
+		System.err.print("\nMUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
 	}
 
 }
