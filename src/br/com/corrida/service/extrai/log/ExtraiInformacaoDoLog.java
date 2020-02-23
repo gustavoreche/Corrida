@@ -45,10 +45,7 @@ public class ExtraiInformacaoDoLog {
 					contadorDeDadosEncontradosNoLog++;
 				}
 				listaDeDadosDoLog.add(dadosDoLog);
-			} else {
-				System.out.println("IniciaAplicacao - executa - Ignora a leitura da primeira linha, "
-						+ "pois são os titulos dos campos.");
-			}
+			} 
 			contadorDeLinhaDoLog++;
 		}		
 		return listaDeDadosDoLog;
