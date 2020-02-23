@@ -1,1 +1,1 @@
-Colocar o arquivo de log no mesmo diretório que este arquivo README.md.
+Colocar o arquivo .log que será lido pelo sistema no mesmo diretório que este arquivo README.md.
