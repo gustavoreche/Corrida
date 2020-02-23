@@ -17,7 +17,6 @@ public class ExibeDadosDaCorrida {
 	public void executa(List<DadosPiloto> listaDeDadosDoPiloto) {
 		
 		Map<Integer, List<DadosPiloto>> listaNova = listaDeDadosDoPiloto.stream().collect(Collectors.groupingBy(DadosPiloto::getCodigoPiloto));
-		System.out.println(listaNova);
 		List<ExibeDados> listaExibeDados = new ArrayList<>();
 		for (Entry<Integer, List<DadosPiloto>>  entry : listaNova.entrySet()) {
 			int codigoDoPiloto = entry.getKey();
@@ -27,12 +26,13 @@ public class ExibeDadosDaCorrida {
 			 LocalTime somaDosTempos = null;
 			 for (DadosPiloto dadosPiloto : dadosDoPiloto) {
 				 LocalTime tempoVolta = dadosPiloto.getTempoVolta();
-				 somaDosTempos = somaDosTempos == null ? tempoVolta : somaTempo(somaDosTempos, tempoVolta);					
+				 somaDosTempos = somaDosTempos == null ? tempoVolta : somaTempo(somaDosTempos, tempoVolta);
 			 }
 			 exibeDados.setTempoSomado(somaDosTempos);
 			 exibeDados.setCodigoPiloto(codigoDoPiloto);
 			 exibeDados.setQuantidadeDeVolta(dadosDoPiloto.stream().map(DadosPiloto::getNumeroDaVolta).max(Comparator.naturalOrder()).get());
 			 exibeDados.setNomePiloto(dadosDoPiloto.get(0).getNomePiloto());
+			 exibeDados.setTempoDaMelhorVolta(dadosDoPiloto.stream().map(DadosPiloto::getTempoVolta).min(Comparator.naturalOrder()).get());
 			 listaExibeDados.add(exibeDados);
 		}
 		List<PosicaoPiloto> listaPosicaoPiloto = new ArrayList<>();
@@ -54,20 +54,38 @@ public class ExibeDadosDaCorrida {
 			piloto.setNomePiloto(exibe.getNomePiloto());
 			piloto.setQuantidadeDeVolta(exibe.getQuantidadeDeVolta());
 			piloto.setSomaTempoVolta(melhorTempo);
+			piloto.setTempoDaMelhorVolta(exibe.getTempoDaMelhorVolta());
 			listaPosicaoPiloto.add(piloto);
 			listaExibeDados.remove(exibe);
 		} while (listaExibeDados.size() != 0);
 		
-//		posicao de chegada
-//		codigo do piloto
-//		nome do piloto
-//		qtd de volta completada
-//		tempo total de prova
+		System.out.println("--------------------------------------------------------------------------\n"
+				+ "--------------------------------------------------------------------------");
 		System.out.println("RESULTADOS:");
 		listaPosicaoPiloto.forEach(lista -> {
-			System.out.println(lista.getPosicao() + "° - " + lista.getCodigoPiloto() + " - " + lista.getNomePiloto() + "\nQuantidade de Voltas "
-					+ "Completadas: " + lista.getQuantidadeDeVolta() + ". Tempo total da prova: " + lista.getSomaTempoVolta());
+			System.out.println(lista.getPosicao() + "° Colocado = " + lista.getCodigoPiloto() + " - " + 
+					lista.getNomePiloto() + "\nQuantidade de Voltas Completadas: " + lista.getQuantidadeDeVolta() + 
+					". Tempo total da prova: " + lista.getSomaTempoVolta() + "\n");
 		});
+		
+		System.out.println("--------------------------------------------------------------------------\n"
+				+ "--------------------------------------------------------------------------");
+		System.out.println("INFORMAÇÕES DA CORRIDA");
+		listaPosicaoPiloto.forEach(lista -> {
+			System.out.println(lista.getCodigoPiloto() + " - " + lista.getNomePiloto() + "\nTempo da melhor volta: " +  lista.getTempoDaMelhorVolta() + 
+					".\nVelocidade média durante a corrida: " + lista.getSomaTempoVolta() + ".\n");
+		});
+		
+		
+		PosicaoPiloto dadosDoPilotoDaMelhorVolta = listaPosicaoPiloto.stream().min(Comparator.comparing(PosicaoPiloto::getTempoDaMelhorVolta)).get();
+		System.out.println("--------------------------------------------------------------------------\n"
+				+ "--------------------------------------------------------------------------");
+		System.out.println("TEMPO DA MELHOR VOLTA DA CORRIDA: " + dadosDoPilotoDaMelhorVolta.getTempoDaMelhorVolta() + ".\nPiloto: "
+				+ dadosDoPilotoDaMelhorVolta.getCodigoPiloto() + " - " + dadosDoPilotoDaMelhorVolta.getNomePiloto());
+		
+		//melhor volta da corrida
+		//calcular velocidade media de cada piloto durante a corrida
+		//descobrir quanto tempo cada piloto chegou apos o vencedor
 		
 	}
 	

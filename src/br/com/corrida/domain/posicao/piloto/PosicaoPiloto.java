@@ -12,6 +12,7 @@ public class PosicaoPiloto  implements Serializable {
 	private LocalTime somaTempoVolta;
 	private String nomePiloto;
 	private int quantidadeDeVolta;
+	private LocalTime tempoDaMelhorVolta;
 	
 	public int getPosicao() {
 		return posicao;
@@ -51,6 +52,14 @@ public class PosicaoPiloto  implements Serializable {
 
 	public void setQuantidadeDeVolta(int quantidadeDeVolta) {
 		this.quantidadeDeVolta = quantidadeDeVolta;
+	}
+	
+	public LocalTime getTempoDaMelhorVolta() {
+		return tempoDaMelhorVolta;
+	}
+
+	public void setTempoDaMelhorVolta(LocalTime tempoDaMelhorVolta) {
+		this.tempoDaMelhorVolta = tempoDaMelhorVolta;
 	}
 	
 }

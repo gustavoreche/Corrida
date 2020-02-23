@@ -11,6 +11,7 @@ public class ExibeDados implements Serializable {
 	private LocalTime tempoSomado;
 	private int quantidadeDeVolta;
 	private String nomePiloto;
+	private LocalTime tempoDaMelhorVolta;
 	
 	public int getCodigoPiloto() {
 		return codigoPiloto;
@@ -43,5 +44,14 @@ public class ExibeDados implements Serializable {
 	public void setNomePiloto(String nomePiloto) {
 		this.nomePiloto = nomePiloto;
 	}
+
+	public LocalTime getTempoDaMelhorVolta() {
+		return tempoDaMelhorVolta;
+	}
+
+	public void setTempoDaMelhorVolta(LocalTime tempoDaMelhorVolta) {
+		this.tempoDaMelhorVolta = tempoDaMelhorVolta;
+	}
+	
 	
 }
