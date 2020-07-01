@@ -1,41 +1,17 @@
 package br.com.corrida.inicia.aplicacao;
 
-import java.util.Scanner;
-
-import br.com.corrida.service.exibe.dados.corrida.ExibeDadosDaCorrida;
-import br.com.corrida.service.extrai.log.ExtraiInformacaoDoLog;
+import br.com.corrida.service.extrai.ExtraiInformacao;
 
 public class IniciaAplicacao {
 	
-	private static final String SAIR = "sair";
+	protected ExtraiInformacao extraiInformacao;
 	
-	private static final int SIM = 1;
-	private static final int NAO = 0;
-	
-	ExtraiInformacaoDoLog extraiInformacao;
-	
-	public IniciaAplicacao() {
-		this.extraiInformacao = new ExtraiInformacaoDoLog();
+	public IniciaAplicacao(ExtraiInformacao extraiInformacao) {
+		this.extraiInformacao = extraiInformacao;
 	}
 	
 	public void executa() {
-		String nomeArquivoDeLog = "";
-		int sairDoSistema = 0;
-		do {
-			@SuppressWarnings("resource")
-			Scanner entradaUsuario = new Scanner(System.in);
-			System.out.println("");
-			System.out.print("DIGITE O NOME DO ARQUIVO DE LOG. EX: teste.log OU DIGITE SAIR: ");
-			nomeArquivoDeLog = entradaUsuario.nextLine();
-			sairDoSistema = nomeArquivoDeLog.equalsIgnoreCase(SAIR) ? SIM : NAO;
-		} while(sairDoSistema == NAO && !this.extraiInformacao.leArquivoDigitado(nomeArquivoDeLog));
-		
-		if(sairDoSistema == SIM) {
-			System.err.print("VOCÊ OPTOU POR SAIR DO SISTEMA. MUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
-			return;
-		}
-		
-		new ExibeDadosDaCorrida().executa(this.extraiInformacao.executa(nomeArquivoDeLog));
+		this.extraiInformacao.extrai();
 		System.err.print("\nMUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
 	}
 
