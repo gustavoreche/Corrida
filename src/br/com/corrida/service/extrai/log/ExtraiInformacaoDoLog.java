@@ -17,7 +17,7 @@ public class ExtraiInformacaoDoLog {
 	
 	private Scanner arquivoLido = null;
 	
-	private static final String REGEX_PARA_SEPARAR_POR_TAB = "([^\\t]+)";
+	private static final String REGEX_PARA_SEPARAR_POR_TAB = "(\\b[^\\t]+\\b)";
 	private static final int PULA_LEITURA_DA_LINHA_1 = 1; 
 
 	public List<DadosPiloto> executa(String nomeArquivoDeLog) {

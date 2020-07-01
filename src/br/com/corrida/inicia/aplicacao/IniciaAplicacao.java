@@ -12,8 +12,13 @@ public class IniciaAplicacao {
 	private static final int SIM = 1;
 	private static final int NAO = 0;
 	
+	ExtraiInformacaoDoLog extraiInformacao;
+	
+	public IniciaAplicacao() {
+		this.extraiInformacao = new ExtraiInformacaoDoLog();
+	}
+	
 	public void executa() {
-		ExtraiInformacaoDoLog extraiInformacao = new ExtraiInformacaoDoLog();
 		String nomeArquivoDeLog = "";
 		int sairDoSistema = 0;
 		do {
@@ -23,14 +28,14 @@ public class IniciaAplicacao {
 			System.out.print("DIGITE O NOME DO ARQUIVO DE LOG. EX: teste.log OU DIGITE SAIR: ");
 			nomeArquivoDeLog = entradaUsuario.nextLine();
 			sairDoSistema = nomeArquivoDeLog.equalsIgnoreCase(SAIR) ? SIM : NAO;
-		} while(sairDoSistema == NAO && !extraiInformacao.leArquivoDigitado(nomeArquivoDeLog));
+		} while(sairDoSistema == NAO && !this.extraiInformacao.leArquivoDigitado(nomeArquivoDeLog));
 		
 		if(sairDoSistema == SIM) {
 			System.err.print("VOCÊ OPTOU POR SAIR DO SISTEMA. MUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
 			return;
 		}
 		
-		new ExibeDadosDaCorrida().executa(extraiInformacao.executa(nomeArquivoDeLog));
+		new ExibeDadosDaCorrida().executa(this.extraiInformacao.executa(nomeArquivoDeLog));
 		System.err.print("\nMUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
 	}
 
