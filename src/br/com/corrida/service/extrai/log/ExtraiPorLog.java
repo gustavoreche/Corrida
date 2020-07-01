@@ -19,7 +19,7 @@ public class ExtraiPorLog implements ExtraiInformacao {
 	}
 
 	@Override
-	public void extrai() {
+	public boolean extrai() {
 		String nomeArquivoDeLog = "";
 		int sairDoSistema = NAO;
 		do {
@@ -33,11 +33,11 @@ public class ExtraiPorLog implements ExtraiInformacao {
 		
 		if(sairDoSistema == SIM) {
 			System.err.print("VOCÊ OPTOU POR SAIR DO SISTEMA. MUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
-			return;
+			return false;
 		}
 		
 		new ExibeDadosDaCorrida().executa(this.extraiInformacao.executa(nomeArquivoDeLog));
-		System.err.print("\nMUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.");
+		return true;
 	}
 
 }
