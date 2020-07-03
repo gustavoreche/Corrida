@@ -60,37 +60,6 @@ public class ExtraiPorLogTeste {
 		Assert.assertNotNull(extraiPorLog.getSaidaDoSistema());
 	}
 	
-//	@Test
-//	public void saiDoSistemaComRetornoTrue_ok() {
-//		Assert.assertTrue(new ExtraiPorLog().saiDoSistema(ExtraiPorLog.SAIR));
-//	}
-//	
-//	@Test
-//	public void saiDoSistemaComRetornoFalse_ok() {
-//		Assert.assertFalse(this.extraiPorLog.saiDoSistema(Matchers.anyString()));
-//	}
-//	
-//	@Test
-//	public void entradaDoUsuarioPreenchida_ok() {
-//		String qualquerTexto = "teste";
-//		Mockito.when(this.extraiPorLog.entradaDoUsuario()).thenReturn(qualquerTexto);
-//	    Assert.assertEquals(qualquerTexto, this.extraiPorLog.entradaDoUsuario());
-//	}
-//	
-//	@Test
-//	public void entradaDoUsuarioVazia_error() {
-//		String qualquerTexto = "";
-//		Mockito.when(this.extraiPorLog.entradaDoUsuario()).thenReturn(qualquerTexto);
-//	    Assert.assertTrue(this.extraiPorLog.entradaDoUsuario().isEmpty());
-//	}
-//	
-//	@Test
-//	public void entradaDoUsuarioNula_error() {
-//		String qualquerTexto = null;
-//		Mockito.when(this.extraiPorLog.entradaDoUsuario()).thenReturn(qualquerTexto);
-//	    Assert.assertNull(this.extraiPorLog.entradaDoUsuario());
-//	}
-	
 	@Test
 	public void extraiComSaidaDoSistemaFalseELeArquivoDigitadoTrue_RetornoTrue_ok() {
 		this.configuraAmbiente("qualquerTexto", false, true);
