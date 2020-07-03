@@ -63,7 +63,7 @@ public class ExtraiInformacaoDoLog {
 			leituraDoArquivoDeLog = new Scanner(new FileReader(nomeArquivoDeLog));
 			this.arquivoLido  = leituraDoArquivoDeLog;
 		} catch (FileNotFoundException e) {
-			System.err.println("NÃ£o encontrou arquivo de log. Nome do arquivo digitado: " 
+			System.err.println("Não encontrou arquivo de log. Nome do arquivo digitado: " 
 		+ nomeArquivoDeLog + "\nO arquivo de log deve estar no seguinte diretorio: " + diretorioQueDeveSerGravado);
 			this.arquivoLido = null;
 			return false;

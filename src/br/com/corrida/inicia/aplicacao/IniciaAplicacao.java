@@ -7,7 +7,7 @@ public class IniciaAplicacao {
 	private final static String FRASE_ENCERRAMENTO = "\nMUITO OBRIGADO. \nSistema desenvolvido por Gustavo Dolmen Reche.";
 	private final static String ERRO = "ERRO NO SISTEMA\nContate o desenvolvedor: gustavodreche@msn.com";
 	
-	protected ExtraiInformacao extraiInformacao;
+	private ExtraiInformacao extraiInformacao;
 	
 	public IniciaAplicacao(ExtraiInformacao extraiInformacao) {
 		this.extraiInformacao = extraiInformacao;
@@ -22,6 +22,10 @@ public class IniciaAplicacao {
 			System.err.print(ERRO);
 			throw new RuntimeException();
 		}
+	}
+	
+	public ExtraiInformacao getExtraiInformacao() {
+		return extraiInformacao;
 	}
 
 }

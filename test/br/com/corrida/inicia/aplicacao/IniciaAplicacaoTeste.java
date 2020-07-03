@@ -3,6 +3,7 @@ package br.com.corrida.inicia.aplicacao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -14,6 +15,9 @@ public class IniciaAplicacaoTeste {
 	@Mock
 	private ExtraiInformacao extraiInformacao;
 	
+	@InjectMocks
+	private IniciaAplicacao iniciaAplicacao = new IniciaAplicacao(this.extraiInformacao);
+	
 	@Before
 	public void iniciaAmbiente() {
 		MockitoAnnotations.initMocks(this);
@@ -22,27 +26,25 @@ public class IniciaAplicacaoTeste {
 	@Test
 	public void construtorPreenchido_ok() {
 		IniciaAplicacao iniciaAplicacao = new IniciaAplicacao(this.extraiInformacao);
-		Assert.assertNotNull(iniciaAplicacao.extraiInformacao);
+		Assert.assertNotNull(iniciaAplicacao.getExtraiInformacao());
 	}
 	
 	@Test
 	public void construtorNulo_error() {
 		IniciaAplicacao iniciaAplicacao = new IniciaAplicacao(null);
-		Assert.assertNull(iniciaAplicacao.extraiInformacao);
+		Assert.assertNull(iniciaAplicacao.getExtraiInformacao());
 	}
 	
 	@Test
 	public void executaComRetornoTrue_ok() {
-		IniciaAplicacao iniciaAplicacao = new IniciaAplicacao(this.extraiInformacao);
 		Mockito.when(this.extraiInformacao.extrai()).thenReturn(true);
-		Assert.assertTrue(iniciaAplicacao.executa());
+		Assert.assertTrue(this.iniciaAplicacao.executa());
 	}
 	
 	@Test
 	public void executaComRetornoFalse_ok() {
-		IniciaAplicacao iniciaAplicacao = new IniciaAplicacao(this.extraiInformacao);
 		Mockito.when(this.extraiInformacao.extrai()).thenReturn(false);
-		Assert.assertFalse(iniciaAplicacao.executa());
+		Assert.assertFalse(this.iniciaAplicacao.executa());
 	}
 	
 	@Test
